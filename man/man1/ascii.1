@@ -1,0 +1,54 @@
+.\" man page for the pcpustat utility.
+.Dd September 5, 2010
+.Dt ascii 1
+.Os
+.Sh NAME
+.Nm ascii
+.Nd ASCII converter and table generator
+.Sh SYNOPSIS
+.Nm
+.Op Fl s
+.Op Ar arg...
+.Sh DESCRIPTION
+The ascii utility generates an ASCII table, or performs ASCII conversions.
+.Pp
+If called without arguments, ascii generates a table of 32 rows by 8 columns listing the decimal, octal, hexadecimal,
+and character representations of each of the 256 characters in 8-bit ASCII.  For characters 0-31, the character
+representation is a "^" followed by the value of the character plus 64.  Thus, 1 is represented as "^A".  Other
+values are rendered as characters in the set used by the current terminal.
+.Pp
+If called with arguments, then each argument is treated as a token to evaluate.  If the evaluation of the token as a
+Ruby expression results in a numeric value, then the decimal, octal, hex, and character representations of that number
+are printed.  If the expression results in a string value, or an evaluation error occurs, then each character of the
+token is represented separately by its ASCII value.  You can also specify that all tokens should be treated as strings
+by using the
+.Op Fl s
+option.
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl s, -string
+Treat all tokens as strings.  The ASCII value of each character in each token will be represented, instead of attempting
+to evaluate arguments as numeric values.
+.Sh EXAMPLES
+.Bl -tag -width lockname
+.It Cm ascii
+Prints the complete ASCII table
+.It Cm ascii 12
+ 12 014 0x0c ^L
+.It Cm ascii -s 12
+ 49 061 0x31 1
+ 50 062 0x32 2
+.It Cm ascii h
+104 150 0x68 h
+.It Cm ascii '?A+32'
+ 97 141 0x61 a
+.It Cm ascii 0x3E
+ 62 076 0x3e >
+.It Cm ascii 0b01001010
+ 74 112 0x4a J
+.Sh AUTHOR
+Sterling (Chip) Camden <sterling@camdensoftware.com>
+.Sh WWW
+<http://chipstips.com/?tag=rbascii>
+.Sh BUGS
+None known.
